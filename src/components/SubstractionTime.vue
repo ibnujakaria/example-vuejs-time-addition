@@ -1,7 +1,5 @@
 <template>
   <div>
-    <h1>Substraction Components</h1>
-
     <table>
       <thead>
         <tr>
@@ -17,7 +15,7 @@
               type="number"
               class="w-12"
               :class="{
-                'bg-yellow-200 border-dotted border-2 border-black': iColumnActive === 0
+                'bg-yellow-200 border-dotted border-2 border-gray-400': iColumnActive === 0
               }"
               v-model="substraction.top.hour"
               :disabled="!controls.supportTopHour"
@@ -28,7 +26,7 @@
               type="number"
               class="w-12"
               :class="{
-                'bg-yellow-200 border-dotted border-2 border-black': iColumnActive === 1
+                'bg-yellow-200 border-dotted border-2 border-gray-400': iColumnActive === 1
               }"
               v-model="substraction.top.minute"
               :disabled="!controls.supportTopMinute"
@@ -39,7 +37,7 @@
               type="number"
               class="w-12"
               :class="{
-                'bg-yellow-200 border-dotted border-2 border-black': iColumnActive === 2
+                'bg-yellow-200 border-dotted border-2 border-gray-400': iColumnActive === 2
               }"
               v-model="substraction.top.second"
               :disabled="!controls.supportTopSecond"
@@ -52,7 +50,7 @@
               type="number"
               class="w-12"
               :class="{
-                'bg-yellow-200 border-dotted border-2 border-black': iColumnActive === 0
+                'bg-yellow-200 border-dotted border-2 border-gray-400': iColumnActive === 0
               }"
               v-model="substraction.bottom.hour"
               :disabled="!controls.supportBottomHour"
@@ -63,7 +61,7 @@
               type="number"
               class="w-12"
               :class="{
-                'bg-yellow-200 border-dotted border-2 border-black': iColumnActive === 1
+                'bg-yellow-200 border-dotted border-2 border-gray-400': iColumnActive === 1
               }"
               v-model="substraction.bottom.minute"
               :disabled="!controls.supportBottomMinute"
@@ -74,7 +72,7 @@
               type="number"
               class="w-12"
               :class="{
-                'bg-yellow-200 border-dotted border-2 border-black': iColumnActive === 2
+                'bg-yellow-200 border-dotted border-2 border-gray-400': iColumnActive === 2
               }"
               v-model="substraction.bottom.second"
               :disabled="!controls.supportBottomSecond"
@@ -266,5 +264,11 @@ export default {
   position: absolute;
   right: -15px;
   top: 0px;
+}
+
+th {
+  @apply text-gray-500;
+  @apply text-sm;
+  @apply font-normal;
 }
 </style>

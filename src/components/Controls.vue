@@ -1,8 +1,7 @@
 <template>
   <div>
-    <h2>Support</h2>
-    <section>
-      <h3>Top</h3>
+    <section class="mt-3">
+      <h2 class="text-gray-500">Top</h2>
 
       <div class="flex gap-4">
         <section>
@@ -22,8 +21,8 @@
       </div>
     </section>
 
-    <section>
-      <h3>Bottom</h3>
+    <section class="mt-3">
+      <h2 class="text-gray-500">Bottom</h2>
 
       <div class="flex gap-4">
         <section>        
