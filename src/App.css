@@ -5,4 +5,6 @@
 input {
   @apply border;
   min-width: 0;
+  @apply px-1;
+  @apply py-2;
 }

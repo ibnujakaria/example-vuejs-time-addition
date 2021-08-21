@@ -16,6 +16,9 @@
             <input
               type="number"
               class="w-12"
+              :class="{
+                'bg-yellow-200 border-dotted border-2 border-black': iColumnActive === 0
+              }"
               v-model="substraction.top.hour"
               :disabled="!controls.supportTopHour"
             >
@@ -24,6 +27,9 @@
             <input
               type="number"
               class="w-12"
+              :class="{
+                'bg-yellow-200 border-dotted border-2 border-black': iColumnActive === 1
+              }"
               v-model="substraction.top.minute"
               :disabled="!controls.supportTopMinute"
             >
@@ -32,6 +38,9 @@
             <input
               type="number"
               class="w-12"
+              :class="{
+                'bg-yellow-200 border-dotted border-2 border-black': iColumnActive === 2
+              }"
               v-model="substraction.top.second"
               :disabled="!controls.supportTopSecond"
             >
@@ -42,6 +51,9 @@
             <input
               type="number"
               class="w-12"
+              :class="{
+                'bg-yellow-200 border-dotted border-2 border-black': iColumnActive === 0
+              }"
               v-model="substraction.bottom.hour"
               :disabled="!controls.supportBottomHour"
             >
@@ -50,6 +62,9 @@
             <input
               type="number"
               class="w-12"
+              :class="{
+                'bg-yellow-200 border-dotted border-2 border-black': iColumnActive === 1
+              }"
               v-model="substraction.bottom.minute"
               :disabled="!controls.supportBottomMinute"
             >
@@ -58,6 +73,9 @@
             <input
               type="number"
               class="w-12"
+              :class="{
+                'bg-yellow-200 border-dotted border-2 border-black': iColumnActive === 2
+              }"
               v-model="substraction.bottom.second"
               :disabled="!controls.supportBottomSecond"
             >
@@ -77,10 +95,11 @@
                 'border-green-500 border-2 text-green-500': substraction.answer.hour === correctHour.result,
               }"
               v-model="substraction.answer.hour"
+              :disabled="iColumnActive < 0"
             >
 
             <div
-              v-if="substraction.answer.hour !== null && substraction.answer.hour !== correctHour.result"
+              v-if="iColumnActive < 0 && substraction.answer.hour !== correctHour.result"
               class="text-red-500"
             >
               {{ correctHour.result }}
@@ -94,10 +113,11 @@
                 'border-green-500 border-2 text-green-500': substraction.answer.minute === correctMinute.result,
               }"
               v-model="substraction.answer.minute"
+              :disabled="iColumnActive < 0"
             >
 
             <div
-              v-if="substraction.answer.minute !== null && substraction.answer.minute !== correctMinute.result"
+              v-if="iColumnActive < 1 && substraction.answer.minute !== correctMinute.result"
               class="text-red-500"
             >
               {{ correctMinute.result }}
@@ -111,10 +131,11 @@
                 'border-green-500 border-2 text-green-500': substraction.answer.second === correctSecond.result,
               }"
               v-model="substraction.answer.second"
+              :disabled="iColumnActive < 0"
             >
             
             <div
-              v-if="substraction.answer.second !== null && substraction.answer.second !== correctSecond.result"
+              v-if="iColumnActive < 2 && substraction.answer.second !== correctSecond.result"
               class="text-red-500"
             >
               {{ correctSecond.result }}
@@ -123,6 +144,24 @@
         </tr>
       </tbody>
     </table>
+
+    <div class="flex flex-col">
+      <button
+        v-if="iColumnActive > -1"
+        class="px-4 py-1 bg-blue-500 text-white rounded-md shadow-sm mt-4"
+        @click="checkAnswer()"
+      >
+        Check Answer
+      </button>
+
+      <button
+        class="px-4 py-1 bg-red-500 text-white rounded-md shadow-sm mt-4"
+        @click="reset()"
+      >
+        Reset
+      </button>
+    </div>
+
 
     <!-- <pre>{{ substraction }}</pre>
     <pre>{{ ({
@@ -134,7 +173,7 @@
 </template>
 
 <script>
-import { computed, reactive } from '@vue/reactivity'
+import { computed, reactive, ref } from '@vue/reactivity'
 import { controls } from '../state/controls'
 
 export default {
@@ -142,6 +181,8 @@ export default {
     const hourColumn = computed(() => controls.supportTopHour || controls.supportBottomHour)
     const minuteColumn = computed(() => controls.supportTopMinute || controls.supportBottomMinute)
     const secondColumn = computed(() => controls.supportTopSecond || controls.supportBottomSesupportTopSecond)
+
+    const iColumnActive = ref(2);
 
     const substraction = reactive({
       top: {
@@ -188,6 +229,20 @@ export default {
       }
     })
 
+    const checkAnswer = () => {
+      iColumnActive.value = iColumnActive.value - 1
+    }
+
+    const reset = () => {
+      substraction.answer = {
+        hour: null,
+        minute: null,
+        second: null,
+      }
+
+      iColumnActive.value = 2
+    }
+
     return {
       controls,
       hourColumn,
@@ -197,6 +252,9 @@ export default {
       correctSecond,
       correctMinute,
       correctHour,
+      iColumnActive,
+      checkAnswer,
+      reset,
     }
   }
 }
